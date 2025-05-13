@@ -59,48 +59,62 @@ const PokemonDetail = () => {
   if (!pokemon) return <p>Chargement...</p>;
 
   return (
-    <div style={{ maxWidth: 400, margin: '2rem auto', padding: 24, border: '1px solid #eee', borderRadius: 12, background: '#fff', textAlign: 'center' }}>
-      <button onClick={() => router.push('/')} style={{ marginBottom: 16, background: '#ef5350', color: 'white', border: 'none', borderRadius: 8, padding: '0.5rem 1rem', cursor: 'pointer' }}>Retour</button>
-      <h1 style={{ color: '#000' }}>{pokemon.name}</h1>
-      <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginBottom: 12 }}>
-        {pokemon.types && pokemon.types.length > 0 && (() => {
-          const t = pokemon.types[0];
-          const color = typeColors[t.name] || '#AAA';
-          return (
-            <span key={t.name} style={{ background: color, color: '#fff', borderRadius: 8, padding: '2px 10px', fontWeight: 600, fontSize: 14, boxShadow: '0 1px 4px #0001' }}>{t.name}</span>
-          );
-        })()}
-      </div>
-      <img src={pokemon.image} alt={pokemon.name} style={{ width: 180, margin: '1rem auto' }} />
-      <h3>Stats :</h3>
-      {pokemon.stats.length === 0 ? (
-        <p style={{ color: '#888' }}>Aucune statistique trouvée pour ce Pokémon.</p>
-      ) : (
-        <ul style={{ listStyle: 'none', padding: 0 }}>
-          {pokemon.stats.map((s) => (
-            <li key={s.name} style={{ margin: '0.3rem 0' }}>{s.name}: {s.value}</li>
-          ))}
-        </ul>
-      )}
-      <h3>Évolutions :</h3>
-      {pokemon.evolutions.length > 0 ? (
-        <ul style={{ listStyle: 'none', padding: 0, display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-          {pokemon.evolutions.map((evo) => (
-            <li key={evo.pokedexId || evo.name} style={{ textAlign: 'center' }}>
-              {evo.image ? (
-                <img src={evo.image} alt={evo.name} style={{ width: 80, height: 80, objectFit: 'contain', background: '#f6f6f6', borderRadius: 8, marginBottom: 4 }} />
-              ) : (
-                <div style={{ width: 80, height: 80, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#eee', borderRadius: 8, marginBottom: 4, color: '#aaa', fontSize: 12 }}>
-                  Pas d'image
+    <div className="pokemon-detail-container">
+      <div className="pokemon-detail-card">
+        <img src={pokemon.image} alt={pokemon.name} className="pokemon-detail-img" />
+        <h1 className="pokemon-detail-title">{pokemon.name}</h1>
+        <div className="pokemon-detail-type-row">
+          {pokemon.types && pokemon.types.length > 0 && (() => {
+            const t = pokemon.types[0];
+            const color = typeColors[t.name] || '#AAA';
+            return (
+              <span key={t.name} className="pokemon-type-badge" style={{ background: color }}>{t.name}</span>
+            );
+          })()}
+        </div>
+        <h3 className="pokemon-detail-section">Stats :</h3>
+        <ul className="pokemon-detail-stats">
+          {pokemon.stats.length === 0 ? (
+            <li className="pokemon-detail-stat-empty">Aucune statistique trouvée pour ce Pokémon.</li>
+          ) : (
+            pokemon.stats.map((s) => (
+              <li key={s.name} className="pokemon-detail-stat">
+                <span className="stat-label">{s.name}</span>
+                <div className="stat-bar-bg">
+                  <div
+                    className="stat-bar-fill"
+                    style={{
+                      width: `${Math.min(s.value, 100)}%`,
+                      background: pokemon.types && pokemon.types.length > 0
+                        ? typeColors[pokemon.types[0].name] || '#ef5350'
+                        : '#ef5350',
+                    }}
+                  />
                 </div>
-              )}
-              <div>{evo.name}</div>
-            </li>
-          ))}
+                <span className="stat-value">{s.value}</span>
+              </li>
+            ))
+          )}
         </ul>
-      ) : (
-        <p>Pas d’évolution</p>
-      )}
+        <h3 className="pokemon-detail-section">Évolutions :</h3>
+        {pokemon.evolutions.length > 0 ? (
+          <ul className="pokemon-detail-evolutions">
+            {pokemon.evolutions.map((evo) => (
+              <li key={evo.pokedexId || evo.name} className="pokemon-detail-evo">
+                {evo.image ? (
+                  <img src={evo.image} alt={evo.name} className="pokemon-detail-evo-img" />
+                ) : (
+                  <div className="pokemon-detail-evo-img evo-img-fallback">Pas d'image</div>
+                )}
+                <div>{evo.name}</div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="pokemon-detail-stat-empty">Pas d’évolution</p>
+        )}
+      </div>
+      <button onClick={() => router.push('/')} className="btn-retour">Retour</button>
     </div>
   );
 };

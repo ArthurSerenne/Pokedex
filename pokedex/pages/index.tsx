@@ -22,6 +22,8 @@ const Home = () => {
   const [search, setSearch] = useState('');
   const [types, setTypes] = useState<{ id: number; name: string }[]>([]);
   const [selectedType, setSelectedType] = useState<number | ''>('');
+  const [limit, setLimit] = useState(50);
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
     fetchTypes().then(res => setTypes(res.data));
@@ -30,7 +32,7 @@ const Home = () => {
   useEffect(() => {
     const loadPokemons = async () => {
       try {
-        const params: any = { limit: 50, name: search };
+        const params: any = { limit, name: search };
         if (selectedType) params.types = [selectedType];
         const response = await fetchPokemons(params);
         const pokemonsWithDetails = await Promise.all(
@@ -44,21 +46,34 @@ const Home = () => {
           })
         );
         setPokemons(pokemonsWithDetails);
+        setHasMore(response.data.length === limit);
       } catch (error) {
         console.error('Error fetching Pokémon:', error);
       }
     };
     loadPokemons();
-  }, [search, selectedType]);
+  }, [search, selectedType, limit]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 &&
+        hasMore
+      ) {
+        setLimit((prev) => prev + 50);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [hasMore]);
 
   return (
     <div>
       <Navbar search={search} onSearchChange={setSearch} />
       <TypeFilter types={types} selectedType={selectedType} onTypeChange={setSelectedType} />
-      <main style={{ padding: '2rem', textAlign: 'center' }}>
-        <h2 style={{ color: 'red' }}>Bienvenue sur le Pokédex</h2>
-        <p>Explorez les Pokémon et découvrez leurs détails.</p>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '1rem' }}>
+      <main>
+        <h2 className='titreHome'>Bienvenue sur le Pokédex</h2>
+        <div className="pokedex-grid">
           {pokemons.map((pokemon) => (
             <PokemonCard key={pokemon.pokedexId} pokemon={{
               pokedexId: pokemon.pokedexId,
@@ -70,9 +85,12 @@ const Home = () => {
             }} />
           ))}
         </div>
+        {hasMore && (
+          <div style={{ padding: '2rem', color: '#888' }}>Chargement...</div>
+        )}
       </main>
-      <footer style={{ padding: '1rem', backgroundColor: 'black', color: 'white', textAlign: 'center' }}>
-        <p>© 2025 Pokédex</p>
+      <footer>
+        <p>Pokédex</p>
       </footer>
     </div>
   );

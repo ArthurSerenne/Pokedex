@@ -16,7 +16,7 @@ const TypeFilter: React.FC<TypeFilterProps> = ({ types, selectedType, onTypeChan
     <select
       value={selectedType}
       onChange={e => onTypeChange(e.target.value ? Number(e.target.value) : '')}
-      style={{ borderRadius: 8, padding: '0.5rem 1rem', marginLeft: 16 }}
+      className="type-filter-select"
     >
       <option value="">Tous les types</option>
       {types.map(type => (

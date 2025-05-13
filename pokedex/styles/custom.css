@@ -1,0 +1,232 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+  background: #fafbfc;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: bold;
+}
+
+.titreHome{
+    margin-bottom: 50px;
+}
+
+main {
+  padding: 2rem;
+  text-align: center;
+}
+
+footer {
+  padding: 1rem;
+  background-color: black;
+  color: white;
+  text-align: center;
+}
+
+.pokedex-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.pokemon-card {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: box-shadow 0.2s;
+  cursor: pointer;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pokemon-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+}
+
+.pokemon-card img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  margin-bottom: 8px;
+}
+
+.pokemon-type-badge {
+  display: inline-block;
+  border-radius: 12px;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #fff;
+  margin-top: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border: 1.5px solid #fff;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.type-filter-select {
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  margin-left: 16px;
+  margin-top: 50px;
+  font-size: 1rem;
+  background: #fff;
+  border: 1.5px solid #ddd;
+  color: #222;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: border 0.15s, box-shadow 0.15s;
+}
+.type-filter-select:focus {
+  outline: none;
+  border: 1.5px solid #ef5350;
+  box-shadow: 0 0 0 2px #ef535033;
+}
+.type-filter-select option {
+  font-size: 1rem;
+}
+
+.pokemon-detail-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: #fafbfc;
+  padding: 2rem 0;
+}
+.pokemon-detail-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px #0001;
+  padding: 2rem 2.5rem 2.5rem 2.5rem;
+  max-width: 420px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pokemon-detail-img {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+.pokemon-detail-title {
+  color: #000;
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+.pokemon-detail-type-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 1.5rem;
+}
+.pokemon-detail-section {
+  margin: 1.5rem 0 0.5rem 0;
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: 700;
+}
+.pokemon-detail-stats {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+  width: 100%;
+}
+.pokemon-detail-stat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0.7rem;
+}
+.stat-label {
+  width: 110px;
+  text-align: right;
+  font-size: 1rem;
+  color: #444;
+  font-weight: 500;
+}
+.stat-bar-bg {
+  flex: 1;
+  height: 14px;
+  background: #eee;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 0 8px;
+}
+.stat-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ef5350 60%, #fbc531 100%);
+  border-radius: 8px 0 0 8px;
+  transition: width 0.3s;
+}
+.stat-value {
+  min-width: 32px;
+  text-align: left;
+  font-size: 1rem;
+  color: #222;
+  font-weight: 600;
+}
+.pokemon-detail-stat-empty {
+  color: #888;
+  text-align: center;
+  margin: 1rem 0;
+}
+.pokemon-detail-evolutions {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.pokemon-detail-evo {
+  text-align: center;
+}
+.pokemon-detail-evo-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  background: #f6f6f6;
+  border-radius: 8px;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.evo-img-fallback {
+  color: #aaa;
+  font-size: 12px;
+}
+.btn-retour {
+  margin-top: 24px;
+  background: #ef5350;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1.2rem;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px #0001;
+}
+.btn-retour:hover {
+  background: #d32f2f;
+}
+
+.no-underline{
+    text-decoration: none;
+}
